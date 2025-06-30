@@ -3,7 +3,7 @@
 This Web app shows dashboard about customers purchase and award points accumulated based on recorded purchase. We are showing three tables to show different details like 'points accumulated by different customers in 3 months purchase', 'total points accumulated by each customer' and 'transaction details of all purchase'
 
 # Technologies used
-React.js, javascript, html5, css3. for unit testing jest and tooling eslint and prettier.
+React.js19, Javascript, Html5, Css3. For unit testing used jest and for linting and formatting used eslint and prettier.
 
 ## Available Scripts
 
@@ -46,6 +46,15 @@ Your app is ready to be deployed!
 ### `Screen on data loading failed`
 
 ![Fail to load preview](./assets/error-view.png)
+
+## Github link to access repository
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [https://github.com/sumitkumar14/react-reward-app](https://github.com/sumitkumar14/react-reward-app) to view it in your browser.
 
 
 
