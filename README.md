@@ -1,6 +1,6 @@
 # Rewards-app
 
-This project is used to show the dashboard related to transaction for different shopping by different customer and points accumulated after shopping after threshold amount.
+This Web app shows dashboard related to customers purchase and award points accumulated  based on recorded purchase. We used react.js 
 
 ## Available Scripts
 
@@ -41,7 +41,12 @@ Your app is ready to be deployed!
 
 ### `screen for transaction records of customers`
 
-![Transaction preview](./assets/transactions-list.png)
+![Transaction preview](./assets/transactions-preview.png)
+
+### `If data loading failed`
+
+![Fail to load preview](./assets/error-view.png)
+
 
 
 

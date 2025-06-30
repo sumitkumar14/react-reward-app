@@ -36,7 +36,7 @@ describe('App component', () => {
     render(<App />);
 
     // Check loading content (optional)
-    expect(screen.getByText('Customer Rewards Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('Loading Dashboard data...')).toBeInTheDocument();
 
     await waitFor(() => {
       // All three table titles
@@ -47,17 +47,31 @@ describe('App component', () => {
 
     // Validate table rows exist
     expect(screen.getByText('C001')).toBeInTheDocument();
-    expect(screen.getAllByText("Alice").length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Alice').length).toBeGreaterThan(0);
     expect(screen.getByText('TXN001')).toBeInTheDocument();
     expect(screen.getByText('Speaker')).toBeInTheDocument();
+  });
+
+  test('displays error message if data fails to load', async () => {
+    api.getTransactions.mockRejectedValueOnce(new Error('Network error'));
+
+    render(<App />);
+
+    // Expect loading initially
+    expect(screen.getByText('Loading Dashboard data...')).toBeInTheDocument();
+
+    // Wait for error to appear
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to load dashboard data/i)).toBeInTheDocument();
+    });
   });
 
   test('calculates and displays correct reward points', async () => {
     render(<App />);
     await waitFor(() => {
       // 120 => 2*(20) + 50 = 90, 90 => 40
-      expect(screen.getAllByText("90").length).toBeGreaterThan(0);
-      expect(screen.getAllByText("40").length).toBeGreaterThan(0);
+      expect(screen.getAllByText('90').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('40').length).toBeGreaterThan(0);
     });
   });
 });

@@ -9,18 +9,25 @@ import {
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [rewards, setRewards] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [monthlySummary, setMonthlySummary] = useState([]);
 
   useEffect(() => {
-    getTransactions().then((txns) => {
-      setTransactions(txns);
-      const result = summarizeRewards(txns);
-      setRewards(result);
-      setMonthlySummary(summarizeMonthlyRewards(txns));
-      setLoading(false);
-    });
+    getTransactions()
+      .then((txns) => {
+        setTransactions(txns);
+        setRewards(summarizeRewards(txns));
+        setMonthlySummary(summarizeMonthlyRewards(txns));
+      })
+      .catch((err) => {
+        console.error('Failed to load transactions:', err);
+        setError('Failed to load dashboard data. Please try again later.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   // Transform total monthly rewards for table
@@ -44,21 +51,23 @@ function App() {
 
   // Transform transactions with points for display
   const transactionsData = transactions.map((t) => ({
-    ID: t.id,
-    Customer: t.customer,
-    Date: new Date(t.date).toLocaleDateString(),
+    'Transaction ID': t.id,
+    'Customer Name': t.customer,
+    'Purchase Date': new Date(t.date).toLocaleDateString(),
     Product: t.product,
-    Amount: t.amount.toFixed(2),
+    Price: t.amount.toFixed(2),
     'Reward Points': calculatePoints(t.amount),
   }));
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h1>Customer Rewards Dashboard</h1>
       {loading ? (
         <h2>Loading Dashboard data...</h2>
+      ) : error ? (
+        <h2 style={{ color: 'crimson' }}>{error}</h2>
       ) : (
         <>
+          <h1>Customer Rewards Dashboard</h1>
           <section style={{ marginTop: '2rem' }}>
             <h2>📅 User Monthly Rewards</h2>
             <DynamicTable
@@ -75,7 +84,14 @@ function App() {
           <section>
             <h2>🧾 Transactions</h2>
             <DynamicTable
-              columns={['ID', 'Customer', 'Date', 'Product', 'Amount', 'Reward Points']}
+              columns={[
+                'Transaction ID',
+                'Customer Name',
+                'Purchase Date',
+                'Product',
+                'Price',
+                'Reward Points',
+              ]}
               data={transactionsData}
             />
           </section>
