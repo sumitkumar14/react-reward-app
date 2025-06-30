@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const tableStyle = {
   borderCollapse: "collapse",
@@ -40,5 +41,8 @@ const DynamicTable = ({ columns, data }) => {
     </table>
   );
 };
-
+DynamicTable.propTypes = {
+    columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
+  };
 export default DynamicTable;

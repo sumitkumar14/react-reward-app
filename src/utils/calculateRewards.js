@@ -1,7 +1,8 @@
 // calculate reward points based on amount
 export function calculatePoints(amount) {
+    // handle error or unexpected amount
     if (typeof amount !== "number" || Number.isNaN(amount) || amount< 0) {
-        return 0; // or handle error
+        return 0; 
       }
     const flooredAmount = Math.floor(amount);
   
@@ -25,7 +26,7 @@ export function summarizeRewards(transactions) {
     return result;
   }
   
-  // Main summarizer
+  // summarize monthly rewards for 3 months
 
   export function summarizeMonthlyRewards(transactions) {
     const summaryMap = {};
