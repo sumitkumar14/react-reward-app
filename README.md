@@ -1,6 +1,9 @@
 # Rewards-app
 
-This Web app shows dashboard related to customers purchase and award points accumulated  based on recorded purchase. We used react.js 
+This Web app shows dashboard about customers purchase and award points accumulated based on recorded purchase. We are showing three tables to show different details like 'points accumulated by different customers in 3 months purchase', 'total points accumulated by each customer' and 'transaction details of all purchase'
+
+# Technologies used
+React.js, javascript, html5, css3. for unit testing jest and tooling eslint and prettier.
 
 ## Available Scripts
 
@@ -15,35 +18,32 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 ### `npm test`
-
 Launches the test runner in the interactive watch mode.\
 
 ### `npm run lint`
-
 To check linting issues in app.\
 
 ### `npm run build`
-
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-### `screen of User monthly rewards`
+### `Screen of User monthly rewards`
 
 ![monthly rewards preview](./assets/monthly-rewards.png)
 
-### `screen for total rewards accumulated by different customers`
+### `Screen for total rewards accumulated by different customers`
 
 ![Total rewards preview](./assets/total-rewards.png)
 
 
-### `screen for transaction records of customers`
+### `Screen for transaction records of customers`
 
 ![Transaction preview](./assets/transactions-preview.png)
 
-### `If data loading failed`
+### `Screen on data loading failed`
 
 ![Fail to load preview](./assets/error-view.png)
 

@@ -29,30 +29,35 @@ describe('calculatePoints', () => {
 });
 
 describe('summarizeRewards', () => {
-  const transactions = [
-    { customer: 'Alice', amount: 120, date: '2025-04-01' },
-    { customer: 'Alice', amount: 80, date: '2025-04-20' },
-    { customer: 'Bob', amount: 50, date: '2025-05-01' },
-    { customer: 'Bob', amount: 200, date: '2025-05-15' },
-  ];
-
-  test('sums total and monthly points correctly', () => {
-    const result = summarizeRewards(transactions);
-    expect(result['Alice'].total).toBe(90 + 30);
-    expect(result['Alice'].monthly['April']).toBe(120);
-    expect(result['Bob'].total).toBe(250);
-    expect(result['Bob'].monthly['May']).toBe(250);
+    const transactions = [
+      { customer: 'Alice', amount: 120, date: '2025-04-01' },
+      { customer: 'Alice', amount: 80, date: '2025-04-20' },
+      { customer: 'Bob', amount: 50, date: '2025-05-01' },
+      { customer: 'Bob', amount: 200, date: '2025-05-15' },
+    ];
+  
+    test('calculates total reward points per customer', () => {
+      const result = summarizeRewards(transactions);
+  
+      // Alice: 120 → 90, 80 → 30 → total = 120
+      expect(result['Alice']).toEqual({ total: 120 });
+  
+      // Bob: 50 → 0, 200 → 250 → total = 250
+      expect(result['Bob']).toEqual({ total: 250 });
+    });
+  
+    test('returns empty object for empty transactions', () => {
+      expect(summarizeRewards([])).toEqual({});
+    });
+  
+    test('handles transactions with missing amount field', () => {
+      const data = [{ customer: 'Charlie', date: '2025-06-01' }];
+      const result = summarizeRewards(data);
+  
+      expect(result['Charlie']).toEqual({ total: 0 });
+    });
   });
-
-  test('handles empty input', () => {
-    expect(summarizeRewards([])).toEqual({});
-  });
-
-  test('handles missing fields safely', () => {
-    const data = [{ customer: 'Charlie', date: '2025-06-01' }];
-    expect(summarizeRewards(data)['Charlie'].total).toBe(0);
-  });
-});
+  
 
 describe('summarizeMonthlyRewards', () => {
   const transactions = [

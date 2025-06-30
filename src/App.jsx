@@ -21,8 +21,7 @@ function App() {
         setRewards(summarizeRewards(txns));
         setMonthlySummary(summarizeMonthlyRewards(txns));
       })
-      .catch((err) => {
-        console.error('Failed to load transactions:', err);
+      .catch(() => {
         setError('Failed to load dashboard data. Please try again later.');
       })
       .finally(() => {
