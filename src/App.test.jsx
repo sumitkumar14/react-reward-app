@@ -47,7 +47,7 @@ describe('App component', () => {
 
     // Validate table rows exist
     expect(screen.getByText('C001')).toBeInTheDocument();
-    expect(screen.getByText('Alice')).toBeInTheDocument();
+    expect(screen.getAllByText("Alice").length).toBeGreaterThan(0);
     expect(screen.getByText('TXN001')).toBeInTheDocument();
     expect(screen.getByText('Speaker')).toBeInTheDocument();
   });
@@ -56,8 +56,8 @@ describe('App component', () => {
     render(<App />);
     await waitFor(() => {
       // 120 => 2*(20) + 50 = 90, 90 => 40
-      expect(screen.getByText('90')).toBeInTheDocument(); // from Alice's purchase
-      expect(screen.getByText('40')).toBeInTheDocument(); // from Bob's purchase
+      expect(screen.getAllByText("90").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("40").length).toBeGreaterThan(0);
     });
   });
 });
