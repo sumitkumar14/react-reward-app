@@ -49,12 +49,7 @@ Your app is ready to be deployed!
 
 ## Github link to access repository
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [https://github.com/sumitkumar14/react-reward-app](https://github.com/sumitkumar14/react-reward-app) to view it in your browser.
+Open [https://github.com/sumitkumar14/react-reward-app](https://github.com/sumitkumar14/react-reward-app)
 
 
 
