@@ -21,12 +21,6 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier \"src/**/*.{js,jsx,json,css,md}\" --write"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

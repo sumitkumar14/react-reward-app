@@ -63,7 +63,6 @@ describe('sortTransactionsByDate', () => {
   });
 });
 
-
 describe('summarizeRewards', () => {
   const transactions = [
     { customer: 'Alice', amount: 120, date: '2025-04-01' },
