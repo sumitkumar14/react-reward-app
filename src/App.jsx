@@ -5,7 +5,8 @@ import {
   summarizeRewards,
   summarizeMonthlyRewards,
   calculatePoints,
-} from './utils/calculateRewards';
+  sortTransactionsByDate,
+} from './utils/rewardsUtils';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,9 +18,10 @@ function App() {
   useEffect(() => {
     getTransactions()
       .then((txns) => {
-        setTransactions(txns);
-        setRewards(summarizeRewards(txns));
-        setMonthlySummary(summarizeMonthlyRewards(txns));
+        const sortedtxn = sortTransactionsByDate(txns);
+        setTransactions(sortedtxn);
+        setRewards(summarizeRewards(sortedtxn));
+        setMonthlySummary(summarizeMonthlyRewards(sortedtxn));
       })
       .catch(() => {
         setError('Failed to load dashboard data. Please try again later.');
@@ -54,7 +56,7 @@ function App() {
     'Customer Name': t.customer,
     'Purchase Date': new Date(t.date).toLocaleDateString(),
     Product: t.product,
-    Price: t.amount.toFixed(2),
+    Price: `$${t.amount}`,
     'Reward Points': calculatePoints(t.amount),
   }));
 

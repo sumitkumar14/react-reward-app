@@ -79,5 +79,6 @@ export const getTransactions = async () => {
       amount: 155,
       product: 'Ergonomic Chair',
       date: '2025-06-20',
-    },]);
+    },
+  ]);
 };

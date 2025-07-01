@@ -1,4 +1,10 @@
-import { calculatePoints, summarizeRewards, summarizeMonthlyRewards } from './calculateRewards';
+import {
+  calculatePoints,
+  sortTransactionsByDate,
+  summarizeRewards,
+  summarizeMonthlyRewards,
+  formatUSD
+} from './rewardsUtils';
 
 describe('calculatePoints', () => {
   test('returns 0 for purchases <= $50', () => {
@@ -28,36 +34,66 @@ describe('calculatePoints', () => {
   });
 });
 
-describe('summarizeRewards', () => {
-    const transactions = [
-      { customer: 'Alice', amount: 120, date: '2025-04-01' },
-      { customer: 'Alice', amount: 80, date: '2025-04-20' },
-      { customer: 'Bob', amount: 50, date: '2025-05-01' },
-      { customer: 'Bob', amount: 200, date: '2025-05-15' },
+describe('sortTransactionsByDate', () => {
+  test('sorts transactions in ascending order by date', () => {
+    const input = [
+      { id: 'T3', date: '2025-06-15' },
+      { id: 'T1', date: '2024-03-10' },
+      { id: 'T2', date: '2025-01-05' },
     ];
-  
-    test('calculates total reward points per customer', () => {
-      const result = summarizeRewards(transactions);
-  
-      // Alice: 120 → 90, 80 → 30 → total = 120
-      expect(result['Alice']).toEqual({ total: 120 });
-  
-      // Bob: 50 → 0, 200 → 250 → total = 250
-      expect(result['Bob']).toEqual({ total: 250 });
-    });
-  
-    test('returns empty object for empty transactions', () => {
-      expect(summarizeRewards([])).toEqual({});
-    });
-  
-    test('handles transactions with missing amount field', () => {
-      const data = [{ customer: 'Charlie', date: '2025-06-01' }];
-      const result = summarizeRewards(data);
-  
-      expect(result['Charlie']).toEqual({ total: 0 });
-    });
+
+    const result = sortTransactionsByDate(input);
+
+    expect(result.map((t) => t.id)).toEqual(['T1', 'T2', 'T3']);
   });
-  
+
+  test('returns empty array when given empty input', () => {
+    expect(sortTransactionsByDate([])).toEqual([]);
+  });
+
+  test('does not mutate the original array', () => {
+    const input = [
+      { id: 'T1', date: '2025-02-10' },
+      { id: 'T2', date: '2024-11-25' },
+    ];
+
+    const copy = [...input];
+    sortTransactionsByDate(input);
+
+    expect(input).toEqual(copy); // confirms immutability
+  });
+});
+
+
+describe('summarizeRewards', () => {
+  const transactions = [
+    { customer: 'Alice', amount: 120, date: '2025-04-01' },
+    { customer: 'Alice', amount: 80, date: '2025-04-20' },
+    { customer: 'Bob', amount: 50, date: '2025-05-01' },
+    { customer: 'Bob', amount: 200, date: '2025-05-15' },
+  ];
+
+  test('calculates total reward points per customer', () => {
+    const result = summarizeRewards(transactions);
+
+    // Alice: 120 → 90, 80 → 30 → total = 120
+    expect(result['Alice']).toEqual({ total: 120 });
+
+    // Bob: 50 → 0, 200 → 250 → total = 250
+    expect(result['Bob']).toEqual({ total: 250 });
+  });
+
+  test('returns empty object for empty transactions', () => {
+    expect(summarizeRewards([])).toEqual({});
+  });
+
+  test('handles transactions with missing amount field', () => {
+    const data = [{ customer: 'Charlie', date: '2025-06-01' }];
+    const result = summarizeRewards(data);
+
+    expect(result['Charlie']).toEqual({ total: 0 });
+  });
+});
 
 describe('summarizeMonthlyRewards', () => {
   const transactions = [
