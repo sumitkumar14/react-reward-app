@@ -3,7 +3,6 @@ import {
   sortTransactionsByDate,
   summarizeRewards,
   summarizeMonthlyRewards,
-  formatUSD
 } from './rewardsUtils';
 
 describe('calculatePoints', () => {
