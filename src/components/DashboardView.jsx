@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getTransactions } from './api/transactionApi';
-import DynamicTable from './components/DynamicTable';
+import { getTransactions } from '../api/transactionApi';
+import DynamicTable from './DynamicTable';
 import {
   summarizeRewards,
   summarizeMonthlyRewards,
   calculatePoints,
   sortTransactionsByDate,
-} from './utils/rewardsUtils';
+} from '../utils/rewardsUtils';
+import logger from '../utils/logger';
 
 /**
  * Renders the customer rewards dashboard with three main sections:
@@ -19,7 +20,6 @@ import {
  *
  * @component
  */
-
 function DashboardView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -28,17 +28,29 @@ function DashboardView() {
   const [monthlySummary, setMonthlySummary] = useState([]);
 
   useEffect(() => {
+    logger.info('[Dashboard] Fetching transactions...');
     getTransactions()
       .then((txns) => {
+        logger.debug('[Dashboard] Raw transactions:', txns);
         const sortedtxn = sortTransactionsByDate(txns);
+        logger.debug('[Dashboard] Sorted transactions:', sortedtxn);
+
+        const rewardsData = summarizeRewards(sortedtxn);
+        const monthlyData = summarizeMonthlyRewards(sortedtxn);
+
+        logger.debug('[Dashboard] Rewards Summary:', rewardsData);
+        logger.debug('[Dashboard] Monthly Summary:', monthlyData);
+
         setTransactions(sortedtxn);
-        setRewards(summarizeRewards(sortedtxn));
-        setMonthlySummary(summarizeMonthlyRewards(sortedtxn));
+        setRewards(rewardsData);
+        setMonthlySummary(monthlyData);
       })
-      .catch(() => {
+      .catch((err) => {
+        logger.error('[Dashboard] Failed to fetch transactions:', err);
         setError('Failed to load dashboard data. Please try again later.');
       })
       .finally(() => {
+        logger.info('[Dashboard] Load complete');
         setLoading(false);
       });
   }, []);

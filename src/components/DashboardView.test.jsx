@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import DashboardView from './DashboardView';
-import * as api from './api/transactionApi';
+import * as api from '../api/transactionApi';
 
 // Mocked transaction data
 const mockTransactions = [

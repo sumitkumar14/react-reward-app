@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardView from './DashboardView';
+import DashboardView from './components/DashboardView';
 
 /**
  * Root application component that renders the customer rewards dashboard.
