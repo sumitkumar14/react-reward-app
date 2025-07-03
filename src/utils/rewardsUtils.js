@@ -1,9 +1,23 @@
-// calculate reward points based on amount
+/**
+ * @module rewardsUtils
+ * Utility functions for calculating and summarizing reward points
+ * based on customer transactions.
+ */
+
+/**
+ * Calculates reward points based on a purchase amount.
+ * - No points for amounts ≤ $50
+ * - 1 point per dollar between $51–$100
+ * - 2 points per dollar over $100
+ *
+ * @param {number} amount - The purchase amount in USD
+ * @returns {number} Reward points earned
+ */
 export function calculatePoints(amount) {
-  // handle error or unexpected amount
   if (typeof amount !== 'number' || Number.isNaN(amount) || amount < 0) {
     return 0;
   }
+
   const flooredAmount = Math.floor(amount);
 
   if (flooredAmount <= 50) return 0;
@@ -11,11 +25,17 @@ export function calculatePoints(amount) {
   return (flooredAmount - 100) * 2 + 50;
 }
 
-// calculate total reward points accumulated by each customer;
+/**
+ * Aggregates total reward points for each customer.
+ *
+ * @param {Array<Object>} transactions - List of transaction objects
+ * @param {string} transactions[].customer - Customer name
+ * @param {number} transactions[].amount - Purchase amount
+ * @returns {Object<string, { total: number }>} Rewards summary indexed by customer name
+ */
 export function summarizeRewards(transactions) {
   return transactions.reduce((acc, { customer, amount }) => {
     const points = calculatePoints(amount);
-
     return {
       ...acc,
       [customer]: {
@@ -25,8 +45,17 @@ export function summarizeRewards(transactions) {
   }, {});
 }
 
-// summarize monthly rewards for 3 months
-
+/**
+ * Summarizes monthly reward points per customer across transactions.
+ *
+ * @param {Array<Object>} transactions - List of transactions
+ * @returns {Array<Object>} List of summaries containing:
+ *   - customerId
+ *   - name
+ *   - month (e.g., "April")
+ *   - year (e.g., 2025)
+ *   - points (total reward points for that month)
+ */
 export function summarizeMonthlyRewards(transactions) {
   const summaryMap = transactions.reduce((acc, txn) => {
     const { customerId, customer, date, amount } = txn;
@@ -34,6 +63,7 @@ export function summarizeMonthlyRewards(transactions) {
     const month = d.toLocaleString('default', { month: 'long' });
     const year = d.getFullYear();
     const key = `${customerId}-${month}-${year}`;
+
     const prev = acc[key] || {
       customerId,
       name: customer,
@@ -54,7 +84,12 @@ export function summarizeMonthlyRewards(transactions) {
   return Object.values(summaryMap);
 }
 
-//sort data on the basis of dates
+/**
+ * Sorts an array of transactions in ascending order by date.
+ *
+ * @param {Array<Object>} data - Transaction data with a `date` field
+ * @returns {Array<Object>} New sorted array (does not mutate original)
+ */
 export function sortTransactionsByDate(data) {
   return [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
 }

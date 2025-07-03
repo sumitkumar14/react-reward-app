@@ -1,3 +1,22 @@
+/**
+ * Simulates an asynchronous API call that retrieves customer transaction data.
+ *
+ * @async
+ * @function getTransactions
+ * @returns {Promise<Array<Object>>} Resolves to a list of transaction objects
+ * @example
+ * getTransactions().then(transactions => {
+ *   console.log(transactions[0].customer); // "Alice"
+ * });
+ *
+ * Each transaction object includes:
+ * - id {string}: Unique transaction ID
+ * - customerId {string}: Identifier for the customer
+ * - customer {string}: Customer's name
+ * - amount {number}: Transaction amount in USD
+ * - product {string}: Name of the purchased product
+ * - date {string}: ISO-formatted purchase date (YYYY-MM-DD)
+ */
 export const getTransactions = async () => {
   return Promise.resolve([
     {

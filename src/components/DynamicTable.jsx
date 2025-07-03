@@ -19,6 +19,21 @@ const tdStyle = {
   textAlign: 'left',
 };
 
+/**
+ * Renders a dynamic table based on provided column headers and row data.
+ *
+ * @component
+ * @param {Object} props
+ * @param {string[]} props.columns - Array of column headers to display in the table.
+ * @param {Object[]} props.data - Array of data rows, where each object maps keys to column names.
+ *
+ * @example
+ * const columns = ['Name', 'Points'];
+ * const data = [{ Name: 'Alice', Points: 150 }, { Name: 'Bob', Points: 200 }];
+ *
+ * <DynamicTable columns={columns} data={data} />
+ */
+
 const DynamicTable = ({ columns, data }) => {
   return (
     <table style={tableStyle}>
