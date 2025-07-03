@@ -23,7 +23,7 @@ const mockTransactions = [
   },
 ];
 
-jest.mock('./api/transactionApi', () => ({
+jest.mock('../api/transactionApi', () => ({
   getTransactions: jest.fn(),
 }));
 
