@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
-
+import DashboardView from './components/DashboardView';
 // Optionally mock DashboardView if it's complex
 jest.mock('./DashboardView', () => () => <div>Mocked Dashboard</div>);
 

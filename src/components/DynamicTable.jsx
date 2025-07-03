@@ -6,11 +6,22 @@ const tableStyle = {
   width: '100%',
 };
 
+const containerStyle = {
+  maxHeight: '400px',
+  overflowY: 'auto',
+  border: '1px solid #ddd',
+  marginTop: '1rem',
+};
+
 const thStyle = {
   border: '1px solid #ccc',
   padding: '8px',
   textAlign: 'left',
   backgroundColor: '#f2f2f2',
+  position: 'sticky',
+  top: 0,
+  backgroundClip: 'padding-box',
+  zIndex: 1,
 };
 
 const tdStyle = {
@@ -20,48 +31,43 @@ const tdStyle = {
 };
 
 /**
- * Renders a dynamic table based on provided column headers and row data.
+ * Renders a dynamic table inside a scrollable container with fixed height,
+ * useful for enabling infinite scroll or large datasets.
  *
  * @component
- * @param {Object} props
- * @param {string[]} props.columns - Array of column headers to display in the table.
- * @param {Object[]} props.data - Array of data rows, where each object maps keys to column names.
- *
- * @example
- * const columns = ['Name', 'Points'];
- * const data = [{ Name: 'Alice', Points: 150 }, { Name: 'Bob', Points: 200 }];
- *
- * <DynamicTable columns={columns} data={data} />
  */
-
 const DynamicTable = ({ columns, data }) => {
   return (
-    <table style={tableStyle}>
-      <thead>
-        <tr>
-          {columns.map((col) => (
-            <th key={col} style={thStyle}>
-              {col}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, idx) => (
-          <tr key={idx}>
+    <div style={containerStyle}>
+      <table style={tableStyle}>
+        <thead>
+          <tr>
             {columns.map((col) => (
-              <td key={col} style={tdStyle}>
-                {row[col]}
-              </td>
+              <th key={col} style={thStyle}>
+                {col}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, idx) => (
+            <tr key={idx}>
+              {columns.map((col) => (
+                <td key={col} style={tdStyle}>
+                  {row[col]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
+
 DynamicTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
 export default DynamicTable;

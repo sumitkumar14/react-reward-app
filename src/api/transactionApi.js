@@ -4,21 +4,10 @@
  * @async
  * @function getTransactions
  * @returns {Promise<Array<Object>>} Resolves to a list of transaction objects
- * @example
- * getTransactions().then(transactions => {
- *   console.log(transactions[0].customer); // "Alice"
- * });
- *
- * Each transaction object includes:
- * - id {string}: Unique transaction ID
- * - customerId {string}: Identifier for the customer
- * - customer {string}: Customer's name
- * - amount {number}: Transaction amount in USD
- * - product {string}: Name of the purchased product
- * - date {string}: ISO-formatted purchase date (YYYY-MM-DD)
  */
 export const getTransactions = async () => {
   return Promise.resolve([
+    // Existing 10 transactions...
     {
       id: 'TXN001',
       customerId: 'C001',
@@ -98,6 +87,86 @@ export const getTransactions = async () => {
       amount: 155,
       product: 'Ergonomic Chair',
       date: '2025-06-20',
+    },
+    {
+      id: 'TXN011',
+      customerId: 'C002',
+      customer: 'Bob',
+      amount: 49.99,
+      product: 'Desk Pad',
+      date: '2025-07-01',
+    },
+    {
+      id: 'TXN012',
+      customerId: 'C001',
+      customer: 'Alice',
+      amount: 88.75,
+      product: 'Portable Charger',
+      date: '2025-07-03',
+    },
+    {
+      id: 'TXN013',
+      customerId: 'C003',
+      customer: 'Charlie',
+      amount: 102.35,
+      product: 'Bluetooth Keyboard',
+      date: '2025-07-07',
+    },
+    {
+      id: 'TXN014',
+      customerId: 'C001',
+      customer: 'Alice',
+      amount: 150.5,
+      product: 'Standing Desk',
+      date: '2025-07-10',
+    },
+    {
+      id: 'TXN015',
+      customerId: 'C002',
+      customer: 'Bob',
+      amount: 33.3,
+      product: 'HDMI Adapter',
+      date: '2025-07-12',
+    },
+    {
+      id: 'TXN016',
+      customerId: 'C003',
+      customer: 'Charlie',
+      amount: 212.99,
+      product: 'UltraWide Monitor',
+      date: '2025-07-15',
+    },
+    {
+      id: 'TXN017',
+      customerId: 'C001',
+      customer: 'Alice',
+      amount: 85.49,
+      product: 'USB-C Dock',
+      date: '2025-07-17',
+    },
+    {
+      id: 'TXN018',
+      customerId: 'C002',
+      customer: 'Bob',
+      amount: 101.01,
+      product: 'Noise Meter',
+      date: '2025-07-18',
+    },
+    {
+      id: 'TXN019',
+      customerId: 'C003',
+      customer: 'Charlie',
+      amount: 75.25,
+      product: 'Laptop Arm',
+      date: '2025-07-20',
+    },
+    {
+      id: 'TXN020',
+      customerId: 'C001',
+      customer: 'Alice',
+      amount: 199.95,
+      product: 'LED Desk Lamp',
+      date: '2025-07-22',
     },
   ]);
 };

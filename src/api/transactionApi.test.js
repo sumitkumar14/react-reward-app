@@ -2,11 +2,11 @@
 import { getTransactions } from './transactionApi';
 
 describe('getTransactions', () => {
-  test('resolves with an array of 10 transactions', async () => {
+  test('resolves with an array of 20 transactions', async () => {
     const data = await getTransactions();
 
     expect(Array.isArray(data)).toBe(true);
-    expect(data.length).toBe(10);
+    expect(data.length).toBe(20);
 
     data.forEach((txn) => {
       expect(txn).toHaveProperty('id');
