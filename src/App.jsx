@@ -15,7 +15,7 @@ import ErrorBoundary from './components/ErrorBoundary';
  */
 function App() {
   return (
-    <div style={{ padding: '1rem' }}>
+    <div>
       <ErrorBoundary>
         <DashboardView />
       </ErrorBoundary>

@@ -34,12 +34,13 @@ export function calculatePoints(amount) {
  * @returns {Object<string, { total: number }>} Rewards summary indexed by customer name
  */
 export function summarizeRewards(transactions) {
-  return transactions.reduce((acc, { customer, amount }) => {
+  return transactions.reduce((acc, { customerId, customer, amount }) => {
     const points = calculatePoints(amount);
     return {
       ...acc,
-      [customer]: {
-        total: (acc[customer]?.total || 0) + points,
+      [customerId]: {
+        name: customer,
+        total: (acc[customerId]?.total || 0) + points,
       },
     };
   }, {});

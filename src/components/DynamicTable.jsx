@@ -20,7 +20,7 @@ import {
  * @param {string[]} props.columns - Column names to display
  * @param {Object[]} props.data - Array of data rows, each row is an object keyed by column name
  */
-function SortablePaginatedTable({ columns, data }) {
+function DynamicTable({ columns, data }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(columns[0]);
   const [page, setPage] = useState(0);
@@ -62,7 +62,14 @@ function SortablePaginatedTable({ columns, data }) {
           <TableHead>
             <TableRow>
               {columns.map((col) => (
-                <TableCell key={col}>
+                <TableCell
+                  key={col}
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.primary.main,
+                    color: (theme) => theme.palette.primary.contrastText,
+                    fontWeight: 'bold',
+                  }}
+                >
                   <TableSortLabel
                     active={orderBy === col}
                     direction={orderBy === col ? order : 'asc'}
@@ -100,9 +107,9 @@ function SortablePaginatedTable({ columns, data }) {
   );
 }
 
-SortablePaginatedTable.propTypes = {
+DynamicTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default SortablePaginatedTable;
+export default DynamicTable;

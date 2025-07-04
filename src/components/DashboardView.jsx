@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { getTransactions } from '../api/transactionApi';
-import {
-  summarizeRewards,
-  summarizeMonthlyRewards,
-  calculatePoints,
-  sortTransactionsByDate,
-} from '../utils/rewardsUtils';
+import { sortTransactionsByDate } from '../utils/rewardsUtils';
 import logger from '../utils/logger';
-import SortablePaginatedTable from './SortablePaginatedTable';
-import { Typography, Box } from '@mui/material';
+import { Box } from '@mui/material';
+import HeaderBar from './HeaderBar';
+import UserMonthlyRewardsTable from './UserMonthlyRewardsTable';
+import TotalRewardsTable from './TotalRewardsTable';
+import TransactionsTable from './TransactionsTable';
 
-/**
- * Renders the customer rewards dashboard with three main sections:
- * - 📅 Monthly rewards per customer
- * - 🏆 Total cumulative rewards
- * - 🧾 Transaction history with reward calculation
- *
- * @component
- */
+import DateRangeFilter from './DateRangeFilter';
+import dayjs from 'dayjs';
+
 function DashboardView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [rewards, setRewards] = useState(null);
   const [transactions, setTransactions] = useState([]);
-  const [monthlySummary, setMonthlySummary] = useState([]);
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
+
+  const filteredTxns = transactions.filter((txn) => {
+    if (!dateRange.start || !dateRange.end) return true;
+    const txnDate = dayjs(txn.date);
+    return (
+      txnDate.isAfter(dateRange.start.subtract(1, 'day')) &&
+      txnDate.isBefore(dateRange.end.add(1, 'day'))
+    );
+  });
 
   useEffect(() => {
     logger.info('[Dashboard] Fetching transactions...');
@@ -32,16 +33,7 @@ function DashboardView() {
         logger.debug('[Dashboard] Raw transactions:', txns);
         const sortedtxn = sortTransactionsByDate(txns);
         logger.debug('[Dashboard] Sorted transactions:', sortedtxn);
-
-        const rewardsData = summarizeRewards(sortedtxn);
-        const monthlyData = summarizeMonthlyRewards(sortedtxn);
-
-        logger.debug('[Dashboard] Rewards Summary:', rewardsData);
-        logger.debug('[Dashboard] Monthly Summary:', monthlyData);
-
         setTransactions(sortedtxn);
-        setRewards(rewardsData);
-        setMonthlySummary(monthlyData);
       })
       .catch((err) => {
         logger.error('[Dashboard] Failed to fetch transactions:', err);
@@ -53,73 +45,20 @@ function DashboardView() {
       });
   }, []);
 
-  const totalmonthlyRewardsData = monthlySummary.map((t) => ({
-    'Customer ID': t.customerId,
-    Name: t.name,
-    Month: t.month,
-    Year: t.year,
-    'Reward Points': t.points,
-  }));
-
-  const totalRewardsData = rewards
-    ? Object.entries(rewards).map(([customer, info]) => ({
-        Name: customer,
-        'Reward Points': info.total,
-      }))
-    : [];
-
-  const transactionsData = transactions.map((t) => ({
-    'Transaction ID': t.id,
-    'Customer Name': t.customer,
-    'Purchase Date': new Date(t.date).toLocaleDateString(),
-    Product: t.product,
-    Price: `$${t.amount}`,
-    'Reward Points': calculatePoints(t.amount),
-  }));
-
   if (loading) return <h2>Loading Dashboard data...</h2>;
   if (error) return <h2 style={{ color: 'crimson' }}>{error}</h2>;
 
   return (
-    <Box padding="1rem">
-      <Typography variant="h4" gutterBottom>
-        Customer Rewards Dashboard
-      </Typography>
-
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          📅 User Monthly Rewards
-        </Typography>
-        <SortablePaginatedTable
-          columns={['Customer ID', 'Name', 'Month', 'Year', 'Reward Points']}
-          data={totalmonthlyRewardsData}
-        />
+    <>
+      <HeaderBar />
+      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+        <DateRangeFilter dateRange={dateRange} setDateRange={setDateRange} />
       </Box>
 
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          🏆 Total Rewards
-        </Typography>
-        <SortablePaginatedTable columns={['Name', 'Reward Points']} data={totalRewardsData} />
-      </Box>
-
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          🧾 Transactions
-        </Typography>
-        <SortablePaginatedTable
-          columns={[
-            'Transaction ID',
-            'Customer Name',
-            'Purchase Date',
-            'Product',
-            'Price',
-            'Reward Points',
-          ]}
-          data={transactionsData}
-        />
-      </Box>
-    </Box>
+      <UserMonthlyRewardsTable transactions={filteredTxns} />
+      <TotalRewardsTable transactions={filteredTxns} />
+      <TransactionsTable transactions={filteredTxns} />
+    </>
   );
 }
 

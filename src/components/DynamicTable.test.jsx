@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SortablePaginatedTable from './SortablePaginatedTable';
+import DynamicTable from './DynamicTable';
 
 const columns = ['Name', 'Reward Points'];
 const data = [
@@ -13,24 +13,22 @@ const data = [
   { Name: 'Frank', 'Reward Points': 75 },
 ];
 
-describe('SortablePaginatedTable', () => {
-  test('renders headers and rows (paginated)', () => {
-    render(<SortablePaginatedTable columns={columns} data={data} />);
-    columns.forEach((col) => expect(screen.getByText(col)).toBeInTheDocument());
+describe('DynamicTable (paginated table)', () => {
+  beforeEach(() => {
+    render(<DynamicTable columns={columns} data={data} />);
+  });
 
-    // 5 rows per page
+  test('renders headers and initial rows (paginated)', () => {
+    columns.forEach((col) => expect(screen.getByText(col)).toBeInTheDocument());
     const rows = screen.getAllByRole('row');
     expect(rows.length).toBe(6); // 1 header + 5 data
   });
-  
-  test('navigates to next page and back', () => {
-    render(<SortablePaginatedTable columns={columns} data={data} />);
+
+  test('navigates to next and previous page', () => {
     expect(screen.getByText('Alice')).toBeInTheDocument();
 
     const nextButton = screen.getByLabelText('Go to next page');
     fireEvent.click(nextButton);
-
-    // Alice shouldn't appear on page 2
     expect(screen.queryByText('Alice')).not.toBeInTheDocument();
 
     const prevButton = screen.getByLabelText('Go to previous page');
@@ -38,16 +36,13 @@ describe('SortablePaginatedTable', () => {
     expect(screen.getByText('Alice')).toBeInTheDocument();
   });
 
-  test('changes rows per page to 10', async () => {
-    render(<SortablePaginatedTable columns={columns} data={data} />);
+  test('changes rows per page to 10 and displays all rows', async () => {
     const dropdown = screen.getByLabelText(/rows per page/i);
     userEvent.click(dropdown);
-
     const tenOption = await screen.findByRole('option', { name: '10' });
     userEvent.click(tenOption);
 
-    // Wait for rows to update
     const rows = await screen.findAllByRole('row');
-    expect(rows.length).toBe(7); // 6 data rows + 1 header
+    expect(rows.length).toBe(7); // 6 data + 1 header
   });
 });
