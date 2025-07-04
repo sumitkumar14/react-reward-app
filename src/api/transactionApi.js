@@ -5,168 +5,70 @@
  * @function getTransactions
  * @returns {Promise<Array<Object>>} Resolves to a list of transaction objects
  */
+
+// src/api/transactionApi.js
+const customers = [
+  { id: 'C001', name: 'Alice' },
+  { id: 'C002', name: 'Bob' },
+  { id: 'C003', name: 'Charlie' },
+  { id: 'C004', name: 'Diana' },
+  { id: 'C005', name: 'Ethan' },
+];
+
+const products = [
+  'USB Hub',
+  'Smartwatch',
+  'Bluetooth Speaker',
+  'Monitor Stand',
+  'Keyboard',
+  'Webcam',
+  'Desk Lamp',
+  'Standing Desk',
+  'Portable Charger',
+  'Mechanical Mouse',
+  'Laptop Stand',
+  'USB-C Dock',
+  'Wireless Charger',
+  'Noise Meter',
+];
+
+function getRandomItem(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function getRandomAmount() {
+  const base = Math.floor(Math.random() * 200) + 30;
+  const decimal = Math.random().toFixed(2);
+  return parseFloat(`${base}.${decimal.split('.')[1]}`);
+}
+
+function getRandomDate(start, end) {
+  const d = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return d.toISOString().split('T')[0]; // "YYYY-MM-DD"
+}
+
 export const getTransactions = async () => {
-  return Promise.resolve([
-    // Existing 10 transactions...
-    {
-      id: 'TXN001',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 120,
-      product: 'Bluetooth Speaker',
-      date: '2025-04-05',
-    },
-    {
-      id: 'TXN002',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 120,
-      product: 'Speaker',
-      date: '2025-04-05',
-    },
-    {
-      id: 'TXN003',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 75,
-      product: 'Keyboard',
-      date: '2025-04-07',
-    },
-    {
-      id: 'TXN004',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 95,
-      product: 'Monitor Stand',
-      date: '2025-04-15',
-    },
-    {
-      id: 'TXN005',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 200,
-      product: 'Smartwatch',
-      date: '2025-05-03',
-    },
-    {
-      id: 'TXN006',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 130,
-      product: 'Noise-Cancelling Headphones',
-      date: '2025-05-10',
-    },
-    {
-      id: 'TXN007',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 45,
-      product: 'Webcam',
-      date: '2025-05-18',
-    },
-    {
-      id: 'TXN008',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 60,
-      product: 'USB Hub',
-      date: '2025-06-01',
-    },
-    {
-      id: 'TXN009',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 95,
-      product: 'Mechanical Mouse',
-      date: '2025-06-05',
-    },
-    {
-      id: 'TXN010',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 155,
-      product: 'Ergonomic Chair',
-      date: '2025-06-20',
-    },
-    {
-      id: 'TXN011',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 49.99,
-      product: 'Desk Pad',
-      date: '2025-07-01',
-    },
-    {
-      id: 'TXN012',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 88.75,
-      product: 'Portable Charger',
-      date: '2025-07-03',
-    },
-    {
-      id: 'TXN013',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 102.35,
-      product: 'Bluetooth Keyboard',
-      date: '2025-07-07',
-    },
-    {
-      id: 'TXN014',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 150.5,
-      product: 'Standing Desk',
-      date: '2025-07-10',
-    },
-    {
-      id: 'TXN015',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 33.3,
-      product: 'HDMI Adapter',
-      date: '2025-07-12',
-    },
-    {
-      id: 'TXN016',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 212.99,
-      product: 'UltraWide Monitor',
-      date: '2025-07-15',
-    },
-    {
-      id: 'TXN017',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 85.49,
-      product: 'USB-C Dock',
-      date: '2025-07-17',
-    },
-    {
-      id: 'TXN018',
-      customerId: 'C002',
-      customer: 'Bob',
-      amount: 101.01,
-      product: 'Noise Meter',
-      date: '2025-07-18',
-    },
-    {
-      id: 'TXN019',
-      customerId: 'C003',
-      customer: 'Charlie',
-      amount: 75.25,
-      product: 'Laptop Arm',
-      date: '2025-07-20',
-    },
-    {
-      id: 'TXN020',
-      customerId: 'C001',
-      customer: 'Alice',
-      amount: 199.95,
-      product: 'LED Desk Lamp',
-      date: '2025-07-22',
-    },
-  ]);
+  const transactions = [];
+
+  const start = new Date('2024-01-01');
+  const end = new Date('2025-12-31');
+  const total = 300;
+
+  for (let i = 1; i <= total; i++) {
+    const customer = getRandomItem(customers);
+    const product = getRandomItem(products);
+    const amount = getRandomAmount();
+    const date = getRandomDate(start, end);
+
+    transactions.push({
+      id: `TXN${i.toString().padStart(4, '0')}`,
+      customerId: customer.id,
+      customer: customer.name,
+      amount,
+      product,
+      date,
+    });
+  }
+
+  return Promise.resolve(transactions);
 };

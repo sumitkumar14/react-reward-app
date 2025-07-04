@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getTransactions } from '../api/transactionApi';
-import DynamicTable from './DynamicTable';
 import {
   summarizeRewards,
   summarizeMonthlyRewards,
@@ -8,15 +7,14 @@ import {
   sortTransactionsByDate,
 } from '../utils/rewardsUtils';
 import logger from '../utils/logger';
+import SortablePaginatedTable from './SortablePaginatedTable';
+import { Typography, Box } from '@mui/material';
 
 /**
  * Renders the customer rewards dashboard with three main sections:
  * - 📅 Monthly rewards per customer
  * - 🏆 Total cumulative rewards
  * - 🧾 Transaction history with reward calculation
- *
- * Fetches transaction data on mount, sorts and transforms it,
- * and passes it to `DynamicTable` components for display.
  *
  * @component
  */
@@ -83,25 +81,33 @@ function DashboardView() {
   if (error) return <h2 style={{ color: 'crimson' }}>{error}</h2>;
 
   return (
-    <>
-      <h1>Customer Rewards Dashboard</h1>
+    <Box padding="1rem">
+      <Typography variant="h4" gutterBottom>
+        Customer Rewards Dashboard
+      </Typography>
 
-      <section style={{ marginTop: '2rem' }}>
-        <h2>📅 User Monthly Rewards</h2>
-        <DynamicTable
+      <Box mt={4}>
+        <Typography variant="h6" gutterBottom>
+          📅 User Monthly Rewards
+        </Typography>
+        <SortablePaginatedTable
           columns={['Customer ID', 'Name', 'Month', 'Year', 'Reward Points']}
           data={totalmonthlyRewardsData}
         />
-      </section>
+      </Box>
 
-      <section style={{ marginTop: '2rem' }}>
-        <h2>🏆 Total Rewards</h2>
-        <DynamicTable columns={['Name', 'Reward Points']} data={totalRewardsData} />
-      </section>
+      <Box mt={4}>
+        <Typography variant="h6" gutterBottom>
+          🏆 Total Rewards
+        </Typography>
+        <SortablePaginatedTable columns={['Name', 'Reward Points']} data={totalRewardsData} />
+      </Box>
 
-      <section>
-        <h2>🧾 Transactions</h2>
-        <DynamicTable
+      <Box mt={4}>
+        <Typography variant="h6" gutterBottom>
+          🧾 Transactions
+        </Typography>
+        <SortablePaginatedTable
           columns={[
             'Transaction ID',
             'Customer Name',
@@ -112,8 +118,8 @@ function DashboardView() {
           ]}
           data={transactionsData}
         />
-      </section>
-    </>
+      </Box>
+    </Box>
   );
 }
 

@@ -18,9 +18,7 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(
-      screen.getByText(/something went wrong/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
 
     expect(screen.getByText(/Boom!/)).toBeInTheDocument();
 
