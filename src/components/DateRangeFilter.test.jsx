@@ -41,11 +41,15 @@ describe('DateRangeFilter', () => {
     await user.tab();
     expect(mockSetDateRange).toHaveBeenCalled();
   });
-
-  //   test('clears both dates when Clear button is clicked', async () => {
-  //     const user = userEvent;
-  //     const clearBtn = screen.getAllByLabelText(/Clear/i)[0];
-  //     await user.click(clearBtn);
-  //     expect(mockSetDateRange).toHaveBeenCalledWith({ start: null, end: null });
-  //   });
+  
+  test('clears both dates when Clear button is clicked', async () => {
+    const user = userEvent;
+    const clearBtn = screen.getByRole('button', { name: /Clear/i });
+    await user.click(clearBtn);
+    expect(mockSetDateRange).toHaveBeenCalledWith({ start: null, end: null });
+  });
+  
 });
+
+
+

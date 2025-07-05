@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // src/utils/logger.js
 import log from 'loglevel';
 

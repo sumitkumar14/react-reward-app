@@ -21,7 +21,6 @@ function DateRangeFilter({ dateRange, setDateRange }) {
         <Typography variant="h6" gutterBottom>
           Filter By Date Range
         </Typography>
-
         <Box display="flex" flexWrap="wrap" alignItems="flex-start" gap={3} sx={{ mb: 1 }}>
           <Box display="flex" flexDirection="column" alignItems="flex-start">
             <DatePicker
@@ -30,7 +29,7 @@ function DateRangeFilter({ dateRange, setDateRange }) {
               onChange={(newDate) => setDateRange((prev) => ({ ...prev, start: newDate }))}
               slotProps={{ textField: { size: 'small' } }}
             />
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, ml: 1 }}>
+            <Typography variant="caption" color="text.secondary">
               From Date must be before To Date
             </Typography>
           </Box>

@@ -2,3 +2,17 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 import '@testing-library/jest-dom';
+
+const originalError = console.error;
+beforeAll(() => {
+  console.error = (...args) => {
+    if (
+      /Warning.*not wrapped in act/.test(args[0]) &&
+      args[0].includes('TouchRipple')
+    ) {
+      return;
+    }
+    originalError.call(console, ...args);
+  };
+});
+
