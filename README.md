@@ -47,6 +47,10 @@ Your app is ready to be deployed!
 
 ![Fail to load preview](./assets/error-view.png)
 
+### `Unit test coverage report`
+
+![Coverage Report](./assets/coverage-img.png)
+
 ## Github link to access repository
 
 Open [https://github.com/sumitkumar14/react-reward-app](https://github.com/sumitkumar14/react-reward-app)
