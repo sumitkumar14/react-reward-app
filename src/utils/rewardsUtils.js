@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 /**
  * @module rewardsUtils
  * Utility functions for calculating and summarizing reward points
@@ -23,6 +25,46 @@ export function calculatePoints(amount) {
   if (flooredAmount <= 50) return 0;
   if (flooredAmount <= 100) return flooredAmount - 50;
   return (flooredAmount - 100) * 2 + 50;
+}
+
+/**
+ * Groups and sorts transactions by "Month Year"
+ * @param {Array<Object>} transactions
+ * @returns {Object<string, Array<Object>>}
+
+/**
+ * Groups transactions into a sorted Month-Year structure immutably.
+ * @param {Array<Object>} transactions
+ * @returns {Object<string, Array<Object>>}
+ */
+export function groupTransactionsBySortedMonthYear(transactions) {
+  const grouped = transactions.reduce((acc, txn) => {
+    const date = dayjs(txn.date);
+    const key = `${date.format('MMMM')} ${date.year()}`;
+
+    const entry = {
+      customerId: txn.customerId,
+      customerName: txn.customer,
+      transactionId: txn.id,
+      amountSpent: txn.amount,
+      transactionDate: txn.date,
+      transactionYear: date.year(),
+      points: calculatePoints(txn.amount),
+    };
+
+    return {
+      ...acc,
+      [key]: [...(acc[key] || []), entry],
+    };
+  }, {});
+
+  const sortedKeys = Object.keys(grouped).sort((a, b) =>
+    dayjs(a, 'MMMM YYYY').isAfter(dayjs(b, 'MMMM YYYY')) ? 1 : -1
+  );
+
+  return sortedKeys.reduce((sorted, key) => {
+    return { ...sorted, [key]: grouped[key] };
+  }, {});
 }
 
 /**

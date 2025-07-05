@@ -16,7 +16,7 @@ function UserMonthlyRewardsTable({ transactions }) {
   return (
     <Box mt={4}>
       <Typography variant="h6" gutterBottom>
-        📅 User Monthly Rewards
+        📅 User Monthly Total Rewards
       </Typography>
       <DynamicTable
         columns={['Customer ID', 'Name', 'Month', 'Year', 'Reward Points']}

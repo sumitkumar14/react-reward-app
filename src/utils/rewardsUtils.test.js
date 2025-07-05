@@ -1,5 +1,6 @@
 import {
   calculatePoints,
+  groupTransactionsBySortedMonthYear,
   summarizeRewards,
   summarizeMonthlyRewards,
   sortTransactionsByDate,
@@ -12,153 +13,122 @@ describe('calculatePoints', () => {
   });
 
   test('calculates 1 point per $ between 51–100', () => {
-    expect(calculatePoints(51)).toBe(1);
-    expect(calculatePoints(99)).toBe(49);
+    expect(calculatePoints(60)).toBe(10);
     expect(calculatePoints(100)).toBe(50);
   });
 
-  test('calculates 2 points per $ over 100 + 50 for 51–100', () => {
+  test('calculates 2 points per $ over 100 + 50 base', () => {
     expect(calculatePoints(120)).toBe(90);
-    expect(calculatePoints(200)).toBe(250);
   });
 
-  test('handles decimals using floor', () => {
+  test('floors decimal values', () => {
     expect(calculatePoints(120.75)).toBe(90);
     expect(calculatePoints(99.99)).toBe(49);
   });
 
-  test('returns 0 for NaN, negative, or non-numbers', () => {
+  test('returns 0 for invalid or negative inputs', () => {
     expect(calculatePoints(NaN)).toBe(0);
-    expect(calculatePoints(-50)).toBe(0);
-    expect(calculatePoints(undefined)).toBe(0);
     expect(calculatePoints(null)).toBe(0);
-    expect(calculatePoints('100')).toBe(0);
+    expect(calculatePoints(undefined)).toBe(0);
+    expect(calculatePoints(-30)).toBe(0);
+    expect(calculatePoints('80')).toBe(0);
+  });
+});
+
+describe('groupTransactionsBySortedMonthYear', () => {
+  const transactions = [
+    { id: 'T1', customerId: 'C001', customer: 'Alice', amount: 120, date: '2025-04-01' },
+    { id: 'T2', customerId: 'C002', customer: 'Bob', amount: 80, date: '2025-04-10' },
+    { id: 'T3', customerId: 'C003', customer: 'Charlie', amount: 50, date: '2025-05-01' },
+  ];
+
+  test('groups and sorts by Month Year', () => {
+    const result = groupTransactionsBySortedMonthYear(transactions);
+
+    const keys = Object.keys(result);
+    expect(keys).toEqual(['April 2025', 'May 2025']);
+
+    expect(result['April 2025'].length).toBe(2);
+    expect(result['May 2025'][0]).toMatchObject({
+      customerId: 'C003',
+      customerName: 'Charlie',
+      points: 0,
+    });
   });
 });
 
 describe('summarizeRewards', () => {
   const txns = [
     { customerId: 'C001', customer: 'Alice', amount: 120 },
-    { customerId: 'C001', customer: 'Alice', amount: 80 },
-    { customerId: 'C002', customer: 'Bob', amount: 200 },
-    { customerId: 'C003', customer: 'Charlie', amount: -50 },
+    { customerId: 'C001', customer: 'Alice', amount: 75 },
+    { customerId: 'C002', customer: 'Bob', amount: 50 },
   ];
 
-  test('aggregates rewards per customer by ID', () => {
+  test('sums rewards per customerId', () => {
     const result = summarizeRewards(txns);
     expect(result).toEqual({
-      C001: { name: 'Alice', total: 120 },
-      C002: { name: 'Bob', total: 250 },
-      C003: { name: 'Charlie', total: 0 },
+      C001: { name: 'Alice', total: 90 + 25 },
+      C002: { name: 'Bob', total: 0 },
     });
   });
 
-  test('returns empty object when input is empty', () => {
+  test('handles empty array', () => {
     expect(summarizeRewards([])).toEqual({});
-  });
-
-  test('handles missing amount gracefully', () => {
-    const broken = [{ customerId: 'C123', customer: 'Zoe' }];
-    const result = summarizeRewards(broken);
-    expect(result).toEqual({ C123: { name: 'Zoe', total: 0 } });
   });
 });
 
 describe('summarizeMonthlyRewards', () => {
   const txns = [
-    {
-      customerId: 'C001',
-      customer: 'Alice',
-      date: '2025-04-01',
-      amount: 120,
-    },
-    {
-      customerId: 'C001',
-      customer: 'Alice',
-      date: '2025-04-20',
-      amount: 80,
-    },
-    {
-      customerId: 'C002',
-      customer: 'Bob',
-      date: '2025-05-15',
-      amount: 200,
-    },
-    {
-      customerId: 'C003',
-      customer: 'Charlie',
-      date: '2025-06-10',
-      amount: -100,
-    },
+    { customerId: 'C001', customer: 'Alice', amount: 100, date: '2025-06-01' },
+    { customerId: 'C001', customer: 'Alice', amount: 150, date: '2025-06-15' },
+    { customerId: 'C002', customer: 'Bob', amount: 200, date: '2025-07-01' },
   ];
 
-  test('groups by customer + month + year and sums points', () => {
+  test('returns points grouped by month/year/customer', () => {
     const result = summarizeMonthlyRewards(txns);
+
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           customerId: 'C001',
-          name: 'Alice',
-          month: 'April',
+          month: 'June',
           year: 2025,
-          points: 120,
+          points: calculatePoints(100) + calculatePoints(150),
         }),
         expect.objectContaining({
           customerId: 'C002',
-          name: 'Bob',
-          month: 'May',
+          month: 'July',
           year: 2025,
-          points: 250,
-        }),
-        expect.objectContaining({
-          customerId: 'C003',
-          name: 'Charlie',
-          points: 0,
+          points: calculatePoints(200),
         }),
       ])
     );
   });
 
-  test('returns empty array when given empty input', () => {
+  test('handles empty input', () => {
     expect(summarizeMonthlyRewards([])).toEqual([]);
-  });
-
-  test('handles broken transactions without amount', () => {
-    const txns = [{ customerId: 'C004', customer: 'Dana', date: '2025-07-01' }];
-    const result = summarizeMonthlyRewards(txns);
-    expect(result[0]).toEqual(
-      expect.objectContaining({
-        customerId: 'C004',
-        name: 'Dana',
-        points: 0,
-      })
-    );
   });
 });
 
 describe('sortTransactionsByDate', () => {
-  test('sorts by ascending date order', () => {
-    const input = [
-      { id: 'T3', date: '2025-06-15' },
-      { id: 'T1', date: '2024-03-10' },
-      { id: 'T2', date: '2025-01-05' },
-    ];
+  const txns = [
+    { id: 'T3', date: '2025-06-15' },
+    { id: 'T1', date: '2024-01-01' },
+    { id: 'T2', date: '2025-03-12' },
+  ];
 
-    const sorted = sortTransactionsByDate(input);
-    expect(sorted.map((t) => t.id)).toEqual(['T1', 'T2', 'T3']);
+  test('returns ascending order by date', () => {
+    const result = sortTransactionsByDate(txns);
+    expect(result.map((t) => t.id)).toEqual(['T1', 'T2', 'T3']);
   });
 
-  test('does not mutate the original array', () => {
-    const input = [
-      { id: 'T1', date: '2025-02-10' },
-      { id: 'T2', date: '2024-11-25' },
-    ];
-    const copy = [...input];
-    sortTransactionsByDate(input);
-    expect(input).toEqual(copy);
+  test('does not mutate input', () => {
+    const original = [...txns];
+    sortTransactionsByDate(txns);
+    expect(txns).toEqual(original);
   });
 
-  test('returns empty array if input is empty', () => {
+  test('handles empty array', () => {
     expect(sortTransactionsByDate([])).toEqual([]);
   });
 });

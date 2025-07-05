@@ -46,7 +46,7 @@ describe('UserMonthlyRewardsTable', () => {
   test('renders section title and column headers', () => {
     render(<UserMonthlyRewardsTable transactions={mockTransactions} />);
 
-    expect(screen.getByText(/User Monthly Rewards/i)).toBeInTheDocument();
+    expect(screen.getByText(/User Monthly Total Rewards/i)).toBeInTheDocument();
 
     const headers = ['Customer ID', 'Name', 'Month', 'Year', 'Reward Points'];
 

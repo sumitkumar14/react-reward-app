@@ -7,6 +7,7 @@ import HeaderBar from './HeaderBar';
 import UserMonthlyRewardsTable from './UserMonthlyRewardsTable';
 import TotalRewardsTable from './TotalRewardsTable';
 import TransactionsTable from './TransactionsTable';
+import MonthlyRewardsUserTable from './MonthlyRewardsUserTable';
 
 import DateRangeFilter from './DateRangeFilter';
 import dayjs from 'dayjs';
@@ -54,7 +55,7 @@ function DashboardView() {
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
         <DateRangeFilter dateRange={dateRange} setDateRange={setDateRange} />
       </Box>
-
+      <MonthlyRewardsUserTable transactions={filteredTxns} />
       <UserMonthlyRewardsTable transactions={filteredTxns} />
       <TotalRewardsTable transactions={filteredTxns} />
       <TransactionsTable transactions={filteredTxns} />
