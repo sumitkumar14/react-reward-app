@@ -4,6 +4,34 @@ import { calculatePoints } from '../utils/rewardsUtils';
 import DynamicTable from './DynamicTable';
 import { Typography, Box } from '@mui/material';
 
+/**
+ * @component TransactionsTable
+ * @description
+ * Displays a detailed table of customer purchase transactions along with calculated reward points.
+ * 
+ * The component:
+ * - Accepts a flat array of raw transaction records
+ * - Maps each transaction into a display-friendly object with:
+ *   - Transaction ID
+ *   - Customer Name
+ *   - Purchase Date (localized)
+ *   - Product
+ *   - Price (formatted as currency)
+ *   - Reward Points (using `calculatePoints`)
+ * - Renders a `DynamicTable` with labeled columns and formatted data
+ *
+ * @param {Object} props
+ * @param {Array<Object>} props.transactions - List of transactions, where each object includes:
+ *   - {string} id - Transaction ID
+ *   - {string} customer - Customer name
+ *   - {string} date - Purchase date in ISO format
+ *   - {string} product - Product purchased
+ *   - {number} amount - Purchase amount in USD
+ *
+ * @returns {JSX.Element} A box containing a title and a table of individual transaction details
+ */
+
+
 function TransactionsTable({ transactions }) {
   const transactionsData = transactions.map((t) => ({
     'Transaction ID': t.id,

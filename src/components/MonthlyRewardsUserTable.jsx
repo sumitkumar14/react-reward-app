@@ -4,6 +4,32 @@ import { groupTransactionsBySortedMonthYear } from '../utils/rewardsUtils';
 import DynamicTable from './DynamicTable';
 import { Typography, Box } from '@mui/material';
 
+/**
+ * @component MonthlyRewardsUserTable
+ * @description
+ * Displays a collection of transaction reward tables grouped by month and year.
+ * Each table shows detailed transaction data for a specific month, formatted with human-friendly column names.
+ *
+ * The component:
+ * - Accepts raw transaction data as input
+ * - Groups the data by "Month Year" using `groupTransactionsBySortedMonthYear`
+ * - Transforms each transaction into display-friendly keys (e.g., "Customer ID")
+ * - Renders a separate <DynamicTable /> for each grouped period
+ *
+ * @param {Object} props
+ * @param {Array<Object>} props.transactions - Array of customer transaction objects. Each transaction should include:
+ *  - {string} customerId
+ *  - {string} customerName
+ *  - {string} transactionId
+ *  - {number} amountSpent
+ *  - {string} transactionDate (ISO string)
+ *  - {number} transactionYear
+ *  - {number} points
+ *
+ * @returns {JSX.Element} Grouped reward tables by month, each rendered with a title and a DynamicTable of transaction rows.
+ */
+
+
 function MonthlyRewardsUserTable({ transactions }) {
   const totalmonthlyRewardsData = groupTransactionsBySortedMonthYear(transactions);
 

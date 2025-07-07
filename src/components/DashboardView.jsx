@@ -12,6 +12,38 @@ import MonthlyRewardsUserTable from './MonthlyRewardsUserTable';
 import DateRangeFilter from './DateRangeFilter';
 import dayjs from 'dayjs';
 
+/**
+ * @component DashboardView
+ * @description
+ * Renders the main dashboard view for displaying customer rewards data.
+ * It handles data fetching, filtering by date range, and renders
+ * several summary and detail tables.
+ *
+ * ## Features
+ * - Fetches transaction data from API on mount
+ * - Logs lifecycle and transaction state using a custom logger
+ * - Filters transactions by selected date range (inclusive)
+ * - Displays multiple rewards-related tables:
+ *   - Monthly rewards grouped by customer
+ *   - Aggregated rewards per customer
+ *   - Overall transactions table
+ *   - Individual monthly view for transactions
+ *
+ * ## Internal State
+ * @state {boolean} loading - Indicates if data is being fetched
+ * @state {string} error - Stores fetch error message
+ * @state {Array<Object>} transactions - Full list of transactions
+ * @state {Object} dateRange - Currently selected start and end dates for filtering
+ *
+ * ## Rendering
+ * - Shows loader or error message if needed
+ * - Renders DateRangeFilter component for user input
+ * - Applies date filter to transactions before passing to summary tables
+ *
+ * @returns {JSX.Element} Dashboard layout with rewards summaries and filters
+ */
+
+
 function DashboardView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
