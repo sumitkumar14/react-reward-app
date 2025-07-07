@@ -3,7 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 import '@testing-library/jest-dom';
 
-const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {
     if (
@@ -12,7 +11,6 @@ beforeAll(() => {
     ) {
       return;
     }
-    originalError.call(console, ...args);
   };
 });
 
