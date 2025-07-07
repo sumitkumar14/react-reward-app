@@ -43,7 +43,6 @@ import dayjs from 'dayjs';
  * @returns {JSX.Element} Dashboard layout with rewards summaries and filters
  */
 
-
 function DashboardView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

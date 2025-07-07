@@ -29,7 +29,6 @@ import { Typography, Box } from '@mui/material';
  * @returns {JSX.Element} Grouped reward tables by month, each rendered with a title and a DynamicTable of transaction rows.
  */
 
-
 function MonthlyRewardsUserTable({ transactions }) {
   const totalmonthlyRewardsData = groupTransactionsBySortedMonthYear(transactions);
 
@@ -40,7 +39,7 @@ function MonthlyRewardsUserTable({ transactions }) {
           'Customer ID': txn.customerId,
           'Customer Name': txn.customerName,
           'Transaction ID': txn.transactionId,
-          'Amount Spent': txn.amountSpent,
+          'Amount Spent': `$${txn.amountSpent}`,
           'Transaction Date': txn.transactionDate,
           'Transaction Year': txn.transactionYear,
           Points: txn.points,

@@ -5,12 +5,8 @@ import '@testing-library/jest-dom';
 
 beforeAll(() => {
   console.error = (...args) => {
-    if (
-      /Warning.*not wrapped in act/.test(args[0]) &&
-      args[0].includes('TouchRipple')
-    ) {
+    if (/Warning.*not wrapped in act/.test(args[0]) && args[0].includes('TouchRipple')) {
       return;
     }
   };
 });
-

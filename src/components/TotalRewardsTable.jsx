@@ -8,7 +8,7 @@ import { Typography, Box } from '@mui/material';
  * @component TotalRewardsTable
  * @description
  * Displays a summary table of total reward points earned by each customer.
- * 
+ *
  * The component:
  * - Receives an array of raw transaction objects
  * - Uses `summarizeRewards` to calculate total points per customer
@@ -27,7 +27,6 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} A box containing a title and a summary table of total rewards
  */
-
 
 function TotalRewardsTable({ transactions }) {
   const totalRewardsData = Object.entries(summarizeRewards(transactions)).map(

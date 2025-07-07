@@ -8,7 +8,7 @@ import { Typography, Box } from '@mui/material';
  * @component TransactionsTable
  * @description
  * Displays a detailed table of customer purchase transactions along with calculated reward points.
- * 
+ *
  * The component:
  * - Accepts a flat array of raw transaction records
  * - Maps each transaction into a display-friendly object with:
@@ -30,7 +30,6 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} A box containing a title and a table of individual transaction details
  */
-
 
 function TransactionsTable({ transactions }) {
   const transactionsData = transactions.map((t) => ({
