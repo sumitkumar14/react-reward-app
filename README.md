@@ -30,9 +30,16 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-### `Screen of User monthly rewards`
+### `Screen for data filter by date range`
 
-![monthly rewards preview](./assets/monthly-rewards.png)
+![alt text](./assets/filter-screen.png)
+
+### `Table for Users monthly rewards`
+![alt text](./assets/users-monthly-rewards.png)
+
+### `Table for Users monthly total rewards`
+
+![monthly-total-rewards](./assets/monthly-total-rewards.png)
 
 ### `Screen for total rewards accumulated by different customers`
 

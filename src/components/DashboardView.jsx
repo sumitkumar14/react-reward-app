@@ -86,10 +86,12 @@ function DashboardView() {
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
         <DateRangeFilter dateRange={dateRange} setDateRange={setDateRange} />
       </Box>
-      <MonthlyRewardsUserTable transactions={filteredTxns} />
-      <UserMonthlyRewardsTable transactions={filteredTxns} />
-      <TotalRewardsTable transactions={filteredTxns} />
-      <TransactionsTable transactions={filteredTxns} />
+      <Box m={2}>
+        <MonthlyRewardsUserTable transactions={filteredTxns} />
+        <UserMonthlyRewardsTable transactions={filteredTxns} />
+        <TotalRewardsTable transactions={filteredTxns} />
+        <TransactionsTable transactions={filteredTxns} />
+      </Box>
     </>
   );
 }
