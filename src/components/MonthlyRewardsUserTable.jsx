@@ -58,7 +58,7 @@ function MonthlyRewardsUserTable({ transactions }) {
       </Typography>
       {Object.entries(displayData).map(([monthYear, data]) => (
         <Box sx={{ my: 4 }} key={monthYear}>
-          <Typography align="center" variant="h6" gutterBottom color="primary">
+          <Typography align="center" variant="h6" gutterBottom>
             {monthYear}
           </Typography>
           <DynamicTable
