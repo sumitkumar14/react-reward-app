@@ -39,27 +39,6 @@ function DashboardView() {
     start: dayjs().subtract(3, 'month'),
     end: dayjs(),
   });
-
-  useEffect(() => {
-    logger.info('[Dashboard] Fetching transactions...');
-    getTransactions()
-      .then((txns) => {
-        logger.debug('[Dashboard] Raw transactions:', txns);
-        const sortedtxn = sortTransactionsByDate(txns);
-        logger.debug('[Dashboard] Sorted transactions:', sortedtxn);
-        setTransactions(sortedtxn);
-        setFilteredTxns(sortedtxn); // Show all by default
-      })
-      .catch((err) => {
-        logger.error('[Dashboard] Failed to fetch transactions:', err);
-        setError('Failed to load dashboard data. Please try again later.');
-      })
-      .finally(() => {
-        logger.info('[Dashboard] Load complete');
-        setLoading(false);
-      });
-  }, []);
-
   const handleFilter = () => {
     if (!dateRange.start || !dateRange.end) {
       setFilteredTxns(transactions);
@@ -76,6 +55,32 @@ function DashboardView() {
 
     setFilteredTxns(filtered);
   };
+
+  useEffect(() => {
+    logger.info('[Dashboard] Fetching transactions...');
+    getTransactions()
+      .then((txns) => {
+        logger.debug('[Dashboard] Raw transactions:', txns);
+        const sortedtxn = sortTransactionsByDate(txns);
+        logger.debug('[Dashboard] Sorted transactions:', sortedtxn);
+        setTransactions(sortedtxn);
+      })
+      .catch((err) => {
+        logger.error('[Dashboard] Failed to fetch transactions:', err);
+        setError('Failed to load dashboard data. Please try again later.');
+      })
+      .finally(() => {
+        logger.info('[Dashboard] Load complete');
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (transactions) {
+      handleFilter();
+    }
+  }, [transactions]);
+
   const handleClear = () => {
     setDateRange({ start: null, end: null });
     setFilteredTxns(transactions); // reset to full data here

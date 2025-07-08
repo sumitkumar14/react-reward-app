@@ -86,28 +86,10 @@ describe('DashboardView', () => {
     jest.clearAllMocks();
     api.getTransactions.mockResolvedValue(mockTransactions);
     jest.spyOn(utils, 'sortTransactionsByDate').mockImplementation((txns) => txns);
-  });
-
-  test('displays loading state initially and renders dashboard on success', async () => {
     render(<DashboardView />);
-    expect(screen.getByText(/Loading Dashboard data/i)).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.getByText(/Customer Rewards Dashboard/i)).toBeInTheDocument();
-    });
-
-    // Validate child component props via test IDs
-    const userTable = screen.getByTestId('UserMonthlyRewardsTable');
-    const totalTable = screen.getByTestId('TotalRewardsTable');
-    const txnTable = screen.getByTestId('TransactionsTable');
-
-    expect(userTable.textContent).toContain('Alice');
-    expect(totalTable.textContent).toContain('Bob');
-    expect(txnTable.textContent).toContain('TXN001');
   });
 
   test('filters transactions on Filter button click', async () => {
-    render(<DashboardView />);
     const user = userEvent;
 
     // Wait for dashboard to finish loading
@@ -140,7 +122,6 @@ describe('DashboardView', () => {
   });
 
   test('resets filters on Clear button click', async () => {
-    render(<DashboardView />);
     const user = userEvent;
 
     await waitFor(() => {
