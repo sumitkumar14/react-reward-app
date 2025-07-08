@@ -77,7 +77,21 @@ function DashboardView() {
       });
   }, []);
 
-  if (loading) return <h2>Loading Dashboard data...</h2>;
+  if (loading)
+    return (
+      <Box
+        sx={{
+          flexGrow: 1,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h2>Loading Dashboard data...</h2>
+      </Box>
+    );
   if (error) return <h2 style={{ color: 'crimson' }}>{error}</h2>;
 
   return (

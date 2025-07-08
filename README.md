@@ -50,6 +50,11 @@ Your app is ready to be deployed!
 
 ![Transaction preview](./assets/transactions-preview.png)
 
+
+### `Screen when data is loading`
+
+![alt text](./assets/data-loading.png)
+
 ### `Screen on data loading failed`
 
 ![Fail to load preview](./assets/error-view.png)

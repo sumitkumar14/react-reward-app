@@ -1,21 +1,30 @@
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import MonthlyRewardsUserTable from './MonthlyRewardsUserTable';
-import * as rewardsUtils from '../utils/rewardsUtils';
 
-jest.mock('./DynamicTable', () => (props) => {
-  return (
+jest.mock('./DynamicTable', () => {
+  const PropTypes = require('prop-types');
+  const MockDynamicTable = ({ columns, data }) => (
     <div data-testid="dynamic-table">
-      {props.columns.map((col) => (
+      {columns.map((col) => (
         <div key={col}>{col}</div>
       ))}
-      {props.data.map((row, idx) => (
+      {data.map((row, idx) => (
         <div key={idx} data-testid="row">
           {Object.values(row).join(',')}
         </div>
       ))}
     </div>
   );
+
+  MockDynamicTable.displayName = 'MockDynamicTable';
+
+  MockDynamicTable.propTypes = {
+    columns: PropTypes.array.isRequired,
+    data: PropTypes.array.isRequired,
+  };
+
+  return MockDynamicTable;
 });
 
 describe('MonthlyRewardsUserTable', () => {

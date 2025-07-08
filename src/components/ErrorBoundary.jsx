@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Catches errors in child components and displays fallback UI.
@@ -34,5 +35,8 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
+ErrorBoundary.propTypes = {
+  children: PropTypes.node,
+};
 
 export default ErrorBoundary;

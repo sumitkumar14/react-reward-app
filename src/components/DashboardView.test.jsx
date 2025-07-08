@@ -14,15 +14,52 @@ jest.mock('../utils/logger', () => ({
   error: jest.fn(),
 }));
 
-jest.mock('./UserMonthlyRewardsTable', () => (props) => (
-  <div data-testid="UserMonthlyRewardsTable">{JSON.stringify(props.transactions)}</div>
-));
-jest.mock('./TotalRewardsTable', () => (props) => (
-  <div data-testid="TotalRewardsTable">{JSON.stringify(props.transactions)}</div>
-));
-jest.mock('./TransactionsTable', () => (props) => (
-  <div data-testid="TransactionsTable">{JSON.stringify(props.transactions)}</div>
-));
+jest.mock('./MonthlyRewardsUserTable', () => {
+  const PropTypes = require('prop-types');
+  const Mock = ({ transactions }) => (
+    <div data-testid="monthly">{JSON.stringify(transactions)}</div>
+  );
+  Mock.displayName = 'MockMonthlyRewardsUserTable';
+  Mock.propTypes = {
+    transactions: PropTypes.array.isRequired,
+  };
+  return Mock;
+});
+
+jest.mock('./UserMonthlyRewardsTable', () => {
+  const PropTypes = require('prop-types');
+  const Mock = ({ transactions }) => (
+    <div data-testid="UserMonthlyRewardsTable">{JSON.stringify(transactions)}</div>
+  );
+  Mock.displayName = 'MockUserMonthlyRewardsTable';
+  Mock.propTypes = {
+    transactions: PropTypes.array.isRequired,
+  };
+  return Mock;
+});
+
+jest.mock('./TotalRewardsTable', () => {
+  const PropTypes = require('prop-types');
+  const Mock = ({ transactions }) => (
+    <div data-testid="TotalRewardsTable">{JSON.stringify(transactions)}</div>
+  );
+  Mock.displayName = 'MockTotalRewardsTable';
+  Mock.propTypes = {
+    transactions: PropTypes.array.isRequired,
+  };
+  return Mock;
+});
+jest.mock('./TransactionsTable', () => {
+  const PropTypes = require('prop-types');
+  const Mock = ({ transactions }) => (
+    <div data-testid="TransactionsTable">{JSON.stringify(transactions)}</div>
+  );
+  Mock.displayName = 'MockTransactionsTable';
+  Mock.propTypes = {
+    transactions: PropTypes.array.isRequired,
+  };
+  return Mock;
+});
 
 const mockTransactions = [
   {
