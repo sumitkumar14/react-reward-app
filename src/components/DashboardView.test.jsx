@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import DashboardView from './DashboardView';
 import * as api from '../api/transactionApi';
 import * as utils from '../utils/rewardsUtils';
@@ -103,6 +104,58 @@ describe('DashboardView', () => {
     expect(userTable.textContent).toContain('Alice');
     expect(totalTable.textContent).toContain('Bob');
     expect(txnTable.textContent).toContain('TXN001');
+  });
+
+  test('filters transactions on Filter button click', async () => {
+    render(<DashboardView />);
+    const user = userEvent;
+
+    // Wait for dashboard to finish loading
+    await waitFor(() => {
+      expect(screen.getByTestId('TransactionsTable')).toBeInTheDocument();
+    });
+
+    // Locate and update Start Date and End Date inputs
+    const startInput = screen.getAllByLabelText(/Start Date/i)[1];
+    const endInput = screen.getAllByLabelText(/End Date/i)[1];
+
+    // Simulate user input (adjust format as needed based on MUI config)
+    await user.clear(startInput);
+    await user.type(startInput, '04/01/2025');
+    await user.tab();
+
+    await user.clear(endInput);
+    await user.type(endInput, '04/06/2025');
+    await user.tab();
+
+    // Click Filter
+    const filterBtn = screen.getByRole('button', { name: /Filter/i });
+    await user.click(filterBtn);
+
+    await waitFor(() => {
+      const table = screen.getByTestId('TransactionsTable');
+      // Only one transaction falls in this filtered range
+      expect(table.textContent).toContain('TXN001');
+    });
+  });
+
+  test('resets filters on Clear button click', async () => {
+    render(<DashboardView />);
+    const user = userEvent;
+
+    await waitFor(() => {
+      expect(screen.getByTestId('TransactionsTable')).toBeInTheDocument();
+    });
+
+    // Click Clear
+    const clearBtn = screen.getByRole('button', { name: /Clear/i });
+    await user.click(clearBtn);
+
+    await waitFor(() => {
+      const table = screen.getByTestId('TransactionsTable');
+      expect(table.textContent).toContain('TXN001');
+      expect(table.textContent).toContain('TXN002');
+    });
   });
 
   test('displays error message if API fails', async () => {

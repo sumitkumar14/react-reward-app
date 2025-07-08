@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -46,7 +45,7 @@ describe('DateRangeFilter', () => {
 
   test('calls setDateRange when start date is changed', async () => {
     const { mockSetDateRange } = setup();
-    const user = userEvent
+    const user = userEvent;
 
     const input = screen.getAllByLabelText(/Start Date/i)[1]; // MUI renders label twice
     await user.clear(input);
