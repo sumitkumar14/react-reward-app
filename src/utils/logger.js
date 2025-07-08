@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-// src/utils/logger.js
+
 import log from 'loglevel';
 
 log.setLevel('debug'); // or 'info', 'warn', 'error'

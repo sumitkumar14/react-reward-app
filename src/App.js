@@ -1,7 +1,3 @@
-import React from 'react';
-import DashboardView from './components/DashboardComponent/DashboardView';
-import ErrorBoundary from './components/ErrorBoundaryComponent/ErrorBoundary';
-
 /**
  * Root application component that renders the customer rewards dashboard.
  *
@@ -13,6 +9,11 @@ import ErrorBoundary from './components/ErrorBoundaryComponent/ErrorBoundary';
  *   <App />
  * )
  */
+
+import React from 'react';
+import DashboardView from './components/DashboardComponent/DashboardView';
+import ErrorBoundary from './components/ErrorBoundaryComponent/ErrorBoundary';
+
 function App() {
   return (
     <div>

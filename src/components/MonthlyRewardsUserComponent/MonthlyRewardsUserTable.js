@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { groupTransactionsBySortedMonthYear } from '../../utils/rewardsUtils';
-import DynamicTable from '../DynamicTableComponent/DynamicTable';
-import { Typography, Box } from '@mui/material';
-
 /**
  * @component MonthlyRewardsUserTable
  * @description
@@ -28,6 +22,12 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} Grouped reward tables by month, each rendered with a title and a DynamicTable of transaction rows.
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { groupTransactionsBySortedMonthYear } from '../../utils/rewardsUtils';
+import DynamicTable from '../DynamicTableComponent/DynamicTable';
+import { Typography, Box } from '@mui/material';
 
 function MonthlyRewardsUserTable({ transactions }) {
   const totalmonthlyRewardsData = groupTransactionsBySortedMonthYear(transactions);

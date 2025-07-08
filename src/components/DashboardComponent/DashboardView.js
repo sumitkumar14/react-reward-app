@@ -1,3 +1,22 @@
+/**
+ * DashboardView Component
+ *
+ * This is the main layout for the Customer Rewards dashboard.
+ * It displays:
+ * - Transaction data table
+ * - User-wise and monthly reward breakdowns
+ * - Date range filtering functionality
+ *
+ * Data is fetched asynchronously from a mocked service and filtered
+ * locally based on selected date range using dayjs.
+ *
+ * @component
+ * @returns {JSX.Element} A fully rendered reward analytics dashboard
+ *
+ * @example
+ * <DashboardView />
+ */
+
 import React, { useEffect, useState } from 'react';
 import { getTransactions } from '../../services/transactionApi';
 import { sortTransactionsByDate } from '../../utils/rewardsUtils';

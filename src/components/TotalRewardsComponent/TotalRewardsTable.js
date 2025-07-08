@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { summarizeRewards } from '../../utils/rewardsUtils';
-import DynamicTable from '../DynamicTableComponent/DynamicTable';
-import { Typography, Box } from '@mui/material';
-
 /**
  * @component TotalRewardsTable
  * @description
@@ -27,6 +21,12 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} A box containing a title and a summary table of total rewards
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { summarizeRewards } from '../../utils/rewardsUtils';
+import DynamicTable from '../DynamicTableComponent/DynamicTable';
+import { Typography, Box } from '@mui/material';
 
 function TotalRewardsTable({ transactions }) {
   const totalRewardsData = Object.entries(summarizeRewards(transactions)).map(

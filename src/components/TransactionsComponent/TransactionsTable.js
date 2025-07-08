@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { calculatePoints } from '../../utils/rewardsUtils';
-import DynamicTable from '../DynamicTableComponent/DynamicTable';
-import { Typography, Box } from '@mui/material';
-
 /**
  * @component TransactionsTable
  * @description
@@ -30,6 +24,12 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} A box containing a title and a table of individual transaction details
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { calculatePoints } from '../../utils/rewardsUtils';
+import DynamicTable from '../DynamicTableComponent/DynamicTable';
+import { Typography, Box } from '@mui/material';
 
 function TransactionsTable({ transactions }) {
   const transactionsData = transactions.map((t) => ({

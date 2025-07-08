@@ -1,3 +1,12 @@
+/**
+ * Renders a sortable and paginated Material UI table.
+ *
+ * @component
+ * @param {Object} props
+ * @param {string[]} props.columns - Column names to display
+ * @param {Object[]} props.data - Array of data rows, each row is an object keyed by column name
+ */
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -12,14 +21,6 @@ import {
   Paper,
 } from '@mui/material';
 
-/**
- * Renders a sortable and paginated Material UI table.
- *
- * @component
- * @param {Object} props
- * @param {string[]} props.columns - Column names to display
- * @param {Object[]} props.data - Array of data rows, each row is an object keyed by column name
- */
 function DynamicTable({ columns, data }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(columns[0]);

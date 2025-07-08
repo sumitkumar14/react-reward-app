@@ -1,3 +1,16 @@
+/**
+ * HeaderBar Component
+ *
+ * Renders a top AppBar with centered title text using Material UI components.
+ * Used as a static header in the Customer Rewards Dashboard application.
+ *
+ * @component
+ * @returns {JSX.Element} The header bar containing the application title.
+ *
+ * @example
+ * <HeaderBar />
+ */
+
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';

@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
 /**
  * Renders a reusable date range filter using Material UI DatePickers.
  *
@@ -13,6 +7,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
  * @param {Function} props.setDateRange - callback to update the range
  * @param {Function} props.onFilter - callback to trigger filtering
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Box, Button, Typography } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 function DateRangeFilter({ dateRange, setDateRange, onFilter, onClear }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

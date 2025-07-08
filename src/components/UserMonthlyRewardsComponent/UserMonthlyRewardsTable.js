@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { summarizeMonthlyRewards } from '../../utils/rewardsUtils';
-import DynamicTable from '../DynamicTableComponent/DynamicTable';
-import { Typography, Box } from '@mui/material';
-
 /**
  * @component UserMonthlyRewardsTable
  * @description
@@ -26,6 +20,12 @@ import { Typography, Box } from '@mui/material';
  *
  * @returns {JSX.Element} A section containing a heading and a dynamic table of monthly reward summaries
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { summarizeMonthlyRewards } from '../../utils/rewardsUtils';
+import DynamicTable from '../DynamicTableComponent/DynamicTable';
+import { Typography, Box } from '@mui/material';
 
 function UserMonthlyRewardsTable({ transactions }) {
   const totalmonthlyRewardsData = summarizeMonthlyRewards(transactions).map((t) => ({

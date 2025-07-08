@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 /**
  * Catches errors in child components and displays fallback UI.
  *
  * @component
  * @param {React.ReactNode} children - Components to protect with the boundary
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
