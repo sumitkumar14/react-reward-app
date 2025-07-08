@@ -11,17 +11,18 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
  * @param {Object} props
  * @param {Object} props.dateRange - { start: Date|null, end: Date|null }
  * @param {Function} props.setDateRange - callback to update the range
+ * @param {Function} props.onFilter - callback to trigger filtering
  */
-function DateRangeFilter({ dateRange, setDateRange }) {
-  const handleClear = () => setDateRange({ start: null, end: null });
-
+function DateRangeFilter({ dateRange, setDateRange, onFilter, onClear }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ mt: 3, mb: 2 }}>
         <Typography variant="h6" gutterBottom>
           Filter By Date Range
         </Typography>
-        <Box display="flex" flexWrap="wrap" alignItems="flex-start" gap={3} sx={{ mb: 1 }}>
+
+        <Box display="flex" flexWrap="wrap" alignItems="flex-start" gap={3}>
+          {/* Start Date */}
           <Box display="flex" flexDirection="column" alignItems="flex-start">
             <DatePicker
               label="Start Date"
@@ -34,6 +35,7 @@ function DateRangeFilter({ dateRange, setDateRange }) {
             </Typography>
           </Box>
 
+          {/* End Date */}
           <Box display="flex" flexDirection="column" alignItems="flex-start">
             <DatePicker
               label="End Date"
@@ -45,14 +47,14 @@ function DateRangeFilter({ dateRange, setDateRange }) {
               To Date must be after From Date
             </Typography>
           </Box>
+        </Box>
 
-          <Button
-            onClick={handleClear}
-            variant="outlined"
-            color="secondary"
-            size="small"
-            sx={{ height: 'fit-content', mt: 1 }}
-          >
+        {/* Buttons */}
+        <Box display="flex" gap={2} mt={2}>
+          <Button onClick={onFilter} variant="contained" color="primary" size="small">
+            Filter
+          </Button>
+          <Button onClick={onClear} variant="outlined" color="secondary" size="small">
             Clear
           </Button>
         </Box>
@@ -67,6 +69,8 @@ DateRangeFilter.propTypes = {
     end: PropTypes.object,
   }).isRequired,
   setDateRange: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
 };
 
 export default DateRangeFilter;

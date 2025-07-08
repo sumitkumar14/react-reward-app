@@ -32,7 +32,7 @@ Your app is ready to be deployed!
 
 ### `Screen for data filter by date range`
 
-![alt text](./assets/filter-screen.png)
+![filter-screen-preview](./assets/filter-screen.png)
 
 ### `Table for Users monthly rewards`
 ![alt text](./assets/users-monthly-rewards.png)
