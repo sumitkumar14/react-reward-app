@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import MonthlyRewardsUserTable from './MonthlyRewardsUserTable';
 
-jest.mock('./DynamicTable', () => {
+jest.mock('../DynamicTableComponent/DynamicTable', () => {
   const PropTypes = require('prop-types');
   const MockDynamicTable = ({ columns, data }) => (
     <div data-testid="dynamic-table">

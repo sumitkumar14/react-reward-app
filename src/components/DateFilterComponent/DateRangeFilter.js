@@ -50,7 +50,15 @@ function DateRangeFilter({ dateRange, setDateRange, onFilter, onClear }) {
         </Box>
 
         {/* Buttons */}
-        <Box display="flex" gap={2} mt={2}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          gap={2}
+          mt={2}
+        >
           <Button onClick={onFilter} variant="contained" color="primary" size="small">
             Filter
           </Button>

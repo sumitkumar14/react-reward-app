@@ -71,7 +71,6 @@ function DynamicTable({ columns, data }) {
                   }}
                 >
                   <TableSortLabel
-                    active={orderBy === col}
                     direction={orderBy === col ? order : 'asc'}
                     onClick={() => handleSort(col)}
                   >

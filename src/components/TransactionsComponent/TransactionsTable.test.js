@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TransactionsTable from './TransactionsTable';
-import * as rewardsUtils from '../utils/rewardsUtils';
+import * as rewardsUtils from '../../utils/rewardsUtils';
 
 // Mock calculatePoints to isolate logic
-jest.mock('../utils/rewardsUtils', () => ({
+jest.mock('../../utils/rewardsUtils', () => ({
   calculatePoints: jest.fn(),
 }));
 

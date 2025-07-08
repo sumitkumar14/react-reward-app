@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-jest.mock('./components/DashboardView', () => {
+jest.mock('./components/DashboardComponent/DashboardView', () => {
   const MockDashboard = () => <div>Mocked Dashboard</div>;
   MockDashboard.displayName = 'MockDashboard';
   return MockDashboard;

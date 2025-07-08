@@ -2,20 +2,20 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DashboardView from './DashboardView';
-import * as api from '../api/transactionApi';
-import * as utils from '../utils/rewardsUtils';
+import * as api from '../../services/transactionApi';
+import * as utils from '../../utils/rewardsUtils';
 
-jest.mock('../api/transactionApi', () => ({
+jest.mock('../../services/transactionApi', () => ({
   getTransactions: jest.fn(),
 }));
 
-jest.mock('../utils/logger', () => ({
+jest.mock('../../utils/logger', () => ({
   info: jest.fn(),
   debug: jest.fn(),
   error: jest.fn(),
 }));
 
-jest.mock('./MonthlyRewardsUserTable', () => {
+jest.mock('../MonthlyRewardsUserComponent/MonthlyRewardsUserTable', () => {
   const PropTypes = require('prop-types');
   const Mock = ({ transactions }) => (
     <div data-testid="monthly">{JSON.stringify(transactions)}</div>
@@ -27,7 +27,7 @@ jest.mock('./MonthlyRewardsUserTable', () => {
   return Mock;
 });
 
-jest.mock('./UserMonthlyRewardsTable', () => {
+jest.mock('../UserMonthlyRewardsComponent/UserMonthlyRewardsTable', () => {
   const PropTypes = require('prop-types');
   const Mock = ({ transactions }) => (
     <div data-testid="UserMonthlyRewardsTable">{JSON.stringify(transactions)}</div>
@@ -39,7 +39,7 @@ jest.mock('./UserMonthlyRewardsTable', () => {
   return Mock;
 });
 
-jest.mock('./TotalRewardsTable', () => {
+jest.mock('../TotalRewardsComponent/TotalRewardsTable', () => {
   const PropTypes = require('prop-types');
   const Mock = ({ transactions }) => (
     <div data-testid="TotalRewardsTable">{JSON.stringify(transactions)}</div>
@@ -50,7 +50,7 @@ jest.mock('./TotalRewardsTable', () => {
   };
   return Mock;
 });
-jest.mock('./TransactionsTable', () => {
+jest.mock('../TransactionsComponent/TransactionsTable', () => {
   const PropTypes = require('prop-types');
   const Mock = ({ transactions }) => (
     <div data-testid="TransactionsTable">{JSON.stringify(transactions)}</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { summarizeMonthlyRewards } from '../utils/rewardsUtils';
-import DynamicTable from './DynamicTable';
+import { summarizeMonthlyRewards } from '../../utils/rewardsUtils';
+import DynamicTable from '../DynamicTableComponent/DynamicTable';
 import { Typography, Box } from '@mui/material';
 
 /**

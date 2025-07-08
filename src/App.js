@@ -1,6 +1,6 @@
 import React from 'react';
-import DashboardView from './components/DashboardView';
-import ErrorBoundary from './components/ErrorBoundary';
+import DashboardView from './components/DashboardComponent/DashboardView';
+import ErrorBoundary from './components/ErrorBoundaryComponent/ErrorBoundary';
 
 /**
  * Root application component that renders the customer rewards dashboard.

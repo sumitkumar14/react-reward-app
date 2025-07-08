@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TotalRewardsTable from './TotalRewardsTable';
-import * as rewardsUtils from '../utils/rewardsUtils';
+import * as rewardsUtils from '../../utils/rewardsUtils';
 
 // Mock the summarizeRewards function
-jest.mock('../utils/rewardsUtils', () => ({
+jest.mock('../../utils/rewardsUtils', () => ({
   summarizeRewards: jest.fn(),
 }));
 

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { getTransactions } from '../api/transactionApi';
-import { sortTransactionsByDate } from '../utils/rewardsUtils';
-import logger from '../utils/logger';
+import { getTransactions } from '../../services/transactionApi';
+import { sortTransactionsByDate } from '../../utils/rewardsUtils';
+import logger from '../../utils/logger';
 import { Box } from '@mui/material';
-import HeaderBar from './HeaderBar';
-import UserMonthlyRewardsTable from './UserMonthlyRewardsTable';
-import TotalRewardsTable from './TotalRewardsTable';
-import TransactionsTable from './TransactionsTable';
-import MonthlyRewardsUserTable from './MonthlyRewardsUserTable';
-import DateRangeFilter from './DateRangeFilter';
+import HeaderBar from '../HeaderComponent/HeaderBar';
+import UserMonthlyRewardsTable from '../UserMonthlyRewardsComponent/UserMonthlyRewardsTable';
+import TotalRewardsTable from '../TotalRewardsComponent/TotalRewardsTable';
+import TransactionsTable from '../TransactionsComponent/TransactionsTable';
+import MonthlyRewardsUserTable from '../MonthlyRewardsUserComponent/MonthlyRewardsUserTable';
+import DateRangeFilter from '../DateFilterComponent/DateRangeFilter';
 import dayjs from 'dayjs';
 
 function DashboardView() {
