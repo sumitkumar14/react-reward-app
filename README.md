@@ -35,7 +35,7 @@ Your app is ready to be deployed!
 ![filter-screen-preview](./assets/filter-screen.png)
 
 ### `Table for Users monthly rewards`
-![alt text](./assets/users-monthly-rewards.png)
+![alt text]![alt text](image.png)(./assets/users-monthly-rewards.png)
 
 ### `Table for Users monthly total rewards`
 
@@ -43,7 +43,7 @@ Your app is ready to be deployed!
 
 ### `Screen for total rewards accumulated by different customers`
 
-![Total rewards preview](./assets/total-rewards.png)
+![Total rewards preview]![alt text](image.png)(./assets/total-rewards.png)
 
 
 ### `Screen for transaction records of customers`
