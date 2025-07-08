@@ -32,7 +32,7 @@ Your app is ready to be deployed!
 
 ### `Screen for data filter by date range`
 
-![filter-screen-preview](./assets/filter-screen.png)
+![filter-screen-preview]![alt text](image.png)(./assets/filter-screen.png)
 
 ### `Table for Users monthly rewards`
 ![alt text]![alt text](image.png)(./assets/users-monthly-rewards.png)
@@ -43,7 +43,7 @@ Your app is ready to be deployed!
 
 ### `Screen for total rewards accumulated by different customers`
 
-![Total rewards preview]![alt text](image.png)(./assets/total-rewards.png)
+![Total rewards preview](./assets/total-rewards.png)
 
 
 ### `Screen for transaction records of customers`

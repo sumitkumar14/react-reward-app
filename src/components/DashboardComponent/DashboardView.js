@@ -35,7 +35,10 @@ function DashboardView() {
   const [error, setError] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [filteredTxns, setFilteredTxns] = useState([]);
-  const [dateRange, setDateRange] = useState({ start: null, end: null });
+  const [dateRange, setDateRange] = useState({
+    start: dayjs().subtract(3, 'month'),
+    end: dayjs(),
+  });
 
   useEffect(() => {
     logger.info('[Dashboard] Fetching transactions...');
